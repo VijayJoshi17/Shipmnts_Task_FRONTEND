@@ -1,0 +1,208 @@
+<html>
+<head>
+    <title>Shipmnts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+        }
+
+        .filters {
+            margin: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter label {
+            width: 150px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .filter input,
+        .filter select {
+            margin-left: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .filter input[type="number"] {
+            width: 120px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            color: #333;
+        }
+
+        th {
+            background-color: #007bff; 
+            color: #ffffff;
+            cursor: pointer;
+            position: relative;
+        }
+
+        th:hover {
+            background-color: #0056b3; 
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f1f9ff; 
+        }
+
+        th.sort-asc::after {
+            content: "▲";
+            position: absolute;
+            right: 10px;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        th.sort-desc::after {
+            content: "▼";
+            position: absolute;
+            right: 10px;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="filters">
+        <div class="filter">
+            <label for="search">Search:</label>
+            <input type="text" id="search" placeholder="Search across columns">
+        </div>
+        <div class="filter">
+            <label for="roleFilter">Role:</label>
+            <select id="roleFilter">
+                <option value="">All</option>
+                <option value="Engineer">Engineer</option>
+                <option value="Manager">Manager</option>
+                <option value="Intern">Intern</option>
+                <option value="Designer">Designer</option>
+                <option value="Director">Director</option>
+                <option value="Product Manager">Product Manager</option>
+                <option value="Senior Manager">Senior Manager</option>
+            </select>
+        </div>
+        <div class="filter">
+            <label for="isActiveFilter">Is Active:</label>
+            <select id="isActiveFilter">
+                <option value="">All</option>
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+        <div class="filter">
+            <label for="integerFilterSelect">Age:</label>
+            <select id="integerFilterSelect">
+                <option value="">None</option>
+                <option value="equals">Equals</option>
+                <option value="lessThan">Less than</option>
+                <option value="lessThanOrEqual">Less than or equal</option>
+                <option value="greaterThan">Greater than</option>
+                <option value="greaterThanOrEqual">Greater than or equal</option>
+                <option value="range">Range</option>
+                <option value="notEqual">Not equal</option>
+            </select>
+            <input type="number" id="integerFilterValue1" placeholder="Value 1">
+            <input type="number" id="integerFilterValue2" placeholder="Value 2 (if range)">
+        </div>
+        <div class="filter">
+            <label for="stringFilterSelect">Name:</label>
+            <select id="stringFilterSelect">
+                <option value="">None</option>
+                <option value="contains">Contains</option>
+                <option value="notContains">Not contains</option>
+                <option value="equals">Equals</option>
+                <option value="notEqual">Not equal</option>
+                <option value="startsWith">Starts with</option>
+                <option value="endsWith">Ends with</option>
+                <option value="isNull">Is null</option>
+                <option value="isNotNull">Is not null</option>
+            </select>
+            <input type="text" id="stringFilterValue" placeholder="Value">
+        </div>
+        <div class="filter">
+            <label for="dateFilterSelect">Hire Date:</label>
+            <select id="dateFilterSelect">
+                <option value="">None</option>
+                <option value="dateIs">Date is</option>
+                <option value="dateRange">Date range</option>
+                <option value="equals">Equals</option>
+                <option value="lessThan">Less than</option>
+                <option value="lessThanOrEqual">Less than or equal</option>
+                <option value="greaterThan">Greater than</option>
+                <option value="greaterThanOrEqual">Greater than or equal</option>
+                <option value="notEqual">Not equal</option>
+                <option value="isNull">Is null</option>
+                <option value="isNotNull">Is not null</option>
+            </select>
+            <input type="date" id="dateFilterValue1" placeholder="Date 1">
+            <input type="date" id="dateFilterValue2" placeholder="Date 2 (if range)">
+        </div>
+        <div class="filter">
+            <label for="booleanFilterSelect">Is Active:</label>
+            <select id="booleanFilterSelect">
+                <option value="">None</option>
+                <option value="isNull">Is null</option>
+                <option value="isNotNull">Is not null</option>
+                <option value="equals">Equals</option>
+            </select>
+        </div>
+    </div>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">ID</th>
+                <th onclick="sortTable(1)">Name</th>
+                <th onclick="sortTable(2)">Age</th>
+                <th onclick="sortTable(3)">Role</th>
+                <th onclick="sortTable(4)">Hire Date</th>
+                <th onclick="sortTable(5)">Is Active</th>
+                <th onclick="sortTable(6)">Salary</th>
+                <th onclick="sortTable(7)">Department</th>
+                <th onclick="sortTable(8)">Projects Completed</th>
+                <th onclick="sortTable(9)">Last Login</th>
+                <th onclick="sortTable(10)">Access Level</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+
+    <script src="main.js"></script>
+</body>
+</html>
